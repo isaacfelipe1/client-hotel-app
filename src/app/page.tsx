@@ -135,8 +135,8 @@ export default function Login() {
             </div>
           </form>
         </div>
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <p className="text-gray-700 text-center">Nosso horário de atendimento é de Segunda a Sexta-feira das 8h às 18h e aos sabados das 8h às 12h através de nosso whatsapp (92)99192-1009 ou pelo email:atendimento@example.com.</p>
+        <div className=" p-8 rounded-lg shadow-lg max-w-md w-full">
+          <p className="text-white text-center">Nosso horário de atendimento é de Segunda a Sexta-feira das 8h às 18h e aos sabados das 8h às 12h através de nosso whatsapp (92)99192-1009 ou pelo email:atendimento@example.com.</p>
         </div>
       </div>
     </div>
