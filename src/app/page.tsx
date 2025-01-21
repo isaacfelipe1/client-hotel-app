@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import nookies from 'nookies'; 
+import nookies from 'nookies';
 import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import Image from 'next/image';
+import Notification from '../app/components/Notification'; 
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -63,6 +64,13 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#084F9A] to-black">
+      {error && (
+        <Notification
+          message={error}
+          type="error"
+          onClose={() => setError('')}
+        />
+      )}
       <div className="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
           <form onSubmit={handleLogin}>
@@ -75,9 +83,6 @@ export default function Login() {
                 className="mx-auto"
               />
             </h2>
-            {error && (
-              <p className="text-red-500 text-sm text-center mb-4">{error}</p>
-            )}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -135,8 +140,12 @@ export default function Login() {
             </div>
           </form>
         </div>
-        <div className=" p-8 rounded-lg shadow-lg max-w-md w-full">
-          <p className="text-white text-center">Nosso horário de atendimento é de Segunda a Sexta-feira das 8h às 18h e aos sabados das 8h às 12h através de nosso whatsapp (92)99192-1009 ou pelo email:atendimento@example.com.</p>
+        <div className="p-8 rounded-lg shadow-lg max-w-md w-full">
+          <p className="text-white text-center">
+            Nosso horário de atendimento é de Segunda a Sexta-feira das 8h às
+            18h e aos sábados das 8h às 12h através de nosso whatsapp
+            (92)99192-1009 ou pelo email: atendimento@example.com.
+          </p>
         </div>
       </div>
     </div>
