@@ -76,7 +76,7 @@ export default function Login() {
           <form onSubmit={handleLogin}>
             <h2 className="text-center text-3xl font-bold text-[#084F9A] mb-8">
               <Image
-                src="/images/logo.png"
+                src="/img/logo.png"
                 alt="Acesso ao Sistema"
                 width={120}
                 height={120}
