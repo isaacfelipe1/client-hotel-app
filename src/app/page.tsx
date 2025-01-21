@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import nookies from 'nookies'; // Para gerenciar cookies
+import nookies from 'nookies'; 
 import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -14,19 +15,17 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    // Verifica se o usuário já está autenticado
     const cookies = nookies.get();
     const identityCookie = cookies['.AspNetCore.Identity.Application'];
 
     if (identityCookie) {
-      // Redireciona automaticamente para o painel se o usuário já estiver autenticado
       router.push('/painel');
     } else {
-      setIsClient(true); // Renderiza o formulário de login se o usuário não estiver autenticado
+      setIsClient(true);
     }
   }, [router]);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -39,19 +38,15 @@ export default function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
-        credentials: 'include', // Inclui o cookie na requisição
+        credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Login bem-sucedido!', data);
-
-        // Armazena o cookie de autenticação usando nookies
         nookies.set(null, '.AspNetCore.Identity.Application', data.token, {
-          path: '/', // Garante que o cookie esteja disponível em todas as páginas
+          path: '/',
         });
-
-        router.push('/painel'); // Redireciona para o painel após o login
+        router.push('/painel');
       } else {
         setError('Login falhou, verifique suas credenciais.');
       }
@@ -68,70 +63,81 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-[#084F9A] to-black">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <form onSubmit={handleLogin}>
-          <h2 className="text-center text-3xl font-bold text-[#084F9A] mb-8">
-            Acesso ao Sistema
-          </h2>
-          {error && (
-            <p className="text-red-500 text-sm text-center mb-4">{error}</p>
-          )}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Usuário
-            </label>
-            <div className="relative">
-              <FaUser className="absolute left-3 top-2.5 text-gray-500" />
-              <input
-                id="email"
-                type="email"
-                placeholder="Digite seu email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-200 text-black p-2 pl-10 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#4C8D68]"
-                required
+      <div className="flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0">
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+          <form onSubmit={handleLogin}>
+            <h2 className="text-center text-3xl font-bold text-[#084F9A] mb-8">
+              <Image
+                src="/images/logo.png"
+                alt="Acesso ao Sistema"
+                width={120}
+                height={120}
+                className="mx-auto"
               />
-            </div>
-          </div>
-          <div className="mb-6 relative">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Senha
-            </label>
-            <div className="relative">
-              <FaLock className="absolute left-3 top-2.5 text-gray-500" />
-              <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-200 text-black p-2 pl-10 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#4C8D68]"
-                required
-              />
-              <span
-                className="absolute right-2 top-2.5 cursor-pointer text-gray-500 hover:text-black"
-                onClick={togglePasswordVisibility}
+            </h2>
+            {error && (
+              <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+            )}
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+                Usuário
+              </label>
+              <div className="relative">
+                <FaUser className="absolute left-3 top-2.5 text-gray-500" />
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Digite seu email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-gray-200 text-black p-2 pl-10 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#4C8D68]"
+                  required
+                />
+              </div>
             </div>
-          </div>
+            <div className="mb-6 relative">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
+                Senha
+              </label>
+              <div className="relative">
+                <FaLock className="absolute left-3 top-2.5 text-gray-500" />
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Digite sua senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-gray-200 text-black p-2 pl-10 rounded w-full focus:outline-none focus:ring-2 focus:ring-[#4C8D68]"
+                  required
+                />
+                <span
+                  className="absolute right-2 top-2.5 cursor-pointer text-gray-500 hover:text-black"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+            </div>
 
-          <div className="mb-4">
-            <button
-              type="submit"
-              className="bg-[#4C8D68] hover:bg-[#084F9A] text-white font-bold py-2 px-4 rounded w-full"
-            >
-              Conectar
-            </button>
-          </div>
-        </form>
+            <div className="mb-4">
+              <button
+                type="submit"
+                className="bg-[#4C8D68] hover:bg-[#084F9A] text-white font-bold py-2 px-4 rounded w-full"
+              >
+                Conectar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+          <p className="text-gray-700 text-center">Nosso horário de atendimento é de Segunda a Sexta-feira das 8h às 18h e aos sabados das 8h às 12h através de nosso whatsapp (92)99192-1009 ou pelo email:atendimento@example.com.</p>
+        </div>
       </div>
     </div>
   );
