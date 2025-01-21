@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaHome } from 'react-icons/fa';
 
 export default function Navbar() {
   const router = useRouter();
@@ -30,10 +30,10 @@ export default function Navbar() {
   return (
     <nav className="w-full flex justify-between items-center bg-[#084F9A] text-white p-4 mb-8 shadow-md">
       <h1
-        className="text-2xl font-bold cursor-pointer hover:text-[#4C8D68] transition"
+        className="text-2xl font-bold cursor-pointer hover:text-[#4C8D68] transition flex items-center"
         onClick={() => router.push('/painel')}
       >
-        Painel de Gerenciamento
+        <FaHome className="mr-2" /> Painel
       </h1>
 
       <div className="flex items-center space-x-4">

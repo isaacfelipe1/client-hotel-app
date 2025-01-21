@@ -18,15 +18,15 @@ import {
   FaCalendarPlus,
   FaList,
   FaSignOutAlt,
+  FaHome,
 } from 'react-icons/fa';
 
 export default function Painel() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [openSection, setOpenSection] = useState<string | null>(null); 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -101,14 +101,18 @@ export default function Painel() {
         } transition-transform lg:relative lg:translate-x-0`}
       >
         <div>
-          <h2 className="text-2xl font-bold mb-8">Painel</h2>
+          <h2 className="text-2xl font-bold mb-8 flex items-center">
+            <FaHome className="mr-2" /> Painel
+          </h2>
 
           <div className="mb-6">
             <button
               className="flex items-center justify-between w-full text-lg font-semibold focus:outline-none"
               onClick={() => toggleSection('clientes')}
             >
-              <span>Clientes</span>
+              <span className="flex items-center">
+                <FaUserPlus className="mr-2" /> Clientes
+              </span>
               {openSection === 'clientes' ? <FaChevronDown /> : <FaChevronRight />}
             </button>
             {openSection === 'clientes' && (
@@ -145,7 +149,9 @@ export default function Painel() {
               className="flex items-center justify-between w-full text-lg font-semibold focus:outline-none"
               onClick={() => toggleSection('quartos')}
             >
-              <span>Quartos</span>
+              <span className="flex items-center">
+                <FaBed className="mr-2" /> Quartos
+              </span>
               {openSection === 'quartos' ? <FaChevronDown /> : <FaChevronRight />}
             </button>
             {openSection === 'quartos' && (
@@ -183,7 +189,9 @@ export default function Painel() {
               className="flex items-center justify-between w-full text-lg font-semibold focus:outline-none"
               onClick={() => toggleSection('reservas')}
             >
-              <span>Reservas</span>
+              <span className="flex items-center">
+                <FaCalendarPlus className="mr-2" /> Reservas
+              </span>
               {openSection === 'reservas' ? <FaChevronDown /> : <FaChevronRight />}
             </button>
             {openSection === 'reservas' && (
@@ -213,12 +221,11 @@ export default function Painel() {
       </aside>
 
       <main className="flex-1 p-8 bg-white rounded-lg shadow-md mt-16 lg:mt-0">
-  <h1 className="text-2xl font-bold text-black mb-4">Bem-vindo ao Painel</h1>
-  <p className="text-gray-700">
-    Selecione uma das opções no menu lateral para gerenciar os recursos do sistema.
-  </p>
-</main>
-
+        <h1 className="text-2xl font-bold text-black mb-4">Bem-vindo ao Painel</h1>
+        <p className="text-gray-700">
+          Selecione uma das opções no menu lateral para gerenciar os recursos do sistema.
+        </p>
+      </main>
     </div>
   );
 }
